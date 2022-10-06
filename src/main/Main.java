@@ -1,6 +1,7 @@
 package main;
 
 import module.Admin;
+import module.Patient;
 
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -27,7 +28,10 @@ public class Main {
                     Admin.renderAdmin();
                     break;
                 case 2:
-                    System.out.println("case2");
+                    Patient.renderPatient();
+                    break;
+                case 3:
+
                     break;
                 default:
                     // code block

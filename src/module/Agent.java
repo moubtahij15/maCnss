@@ -70,6 +70,17 @@ public class Agent {
         this.nom = nom;
     }
 
+    @Override
+    public String toString() {
+        return "Agent{" +
+                "email='" + email + '\'' +
+                ", pass='" + pass + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", nom='" + nom + '\'' +
+                ", id=" + id +
+                '}';
+    }
+
     public Agent readAgent(int idAgent) throws SQLException, ClassNotFoundException {
         PreparedStatement stmt = con.prepareStatement("select * from agent  where id =?");
         stmt.setInt(1, idAgent);
@@ -80,6 +91,7 @@ public class Agent {
             agent = new Agent(rs.getString("email"), rs.getString("password"), rs.getString("prenom"), rs.getString("nom"), rs.getInt("id"));
 
         }
+        System.out.println(agent);
         return agent;
 
     }
@@ -91,6 +103,7 @@ public class Agent {
         stmt.setInt(1, idAgent);
         return stmt.executeUpdate() == 1;
     }
+
     public static boolean deleteAgentView() throws SQLException, ClassNotFoundException {
         Scanner in = new Scanner(System.in);
 
@@ -101,13 +114,14 @@ public class Agent {
     }
 
 
-        public boolean updateAgent() throws SQLException {
+    public boolean updateAgent() throws SQLException {
         PreparedStatement stmt = con.prepareStatement("UPDATE macnss.agent t\n" +
                 "SET t.prenom   = ?,\n" +
                 "    t.nom      = ?,\n" +
                 "    t.email    = ?,\n" +
                 "    t.password = ?\n" +
                 "WHERE t.id = ?;");
+        System.out.println(toString());
         stmt.setString(1, this.prenom);
         stmt.setString(2, this.nom);
         stmt.setString(3, this.email);
@@ -131,6 +145,8 @@ public class Agent {
                 3-mot de pass""");
         int choix = in.nextInt();
         switch (choix) {
+
+
             case 1:
                 System.out.println("enter le nouveau nom du agent :");
                 String nom = in.next();
@@ -178,8 +194,7 @@ public class Agent {
         System.out.println(" \t id \t nom \t prenom \t email");
         System.out.println("----------------------------------------------");
         while (rs.next()) {
-
-            System.out.println(" \t " + rs.getInt("id") + " \t " + rs.getString("prenom") + " \t " + rs.getString("nom") + " \t " + rs.getString("email"));
+            System.out.println(" \t " + rs.getInt("id") + " \t " + rs.getString("nom") + " \t " + rs.getString("prenom") + " \t " + rs.getString("email"));
         }
 
     }
